@@ -56,22 +56,22 @@ The user would be able to create an object by passing a function as a string to 
 
 Scalar function
 ```
-my_func = AD.Elem_function(x^2+1)
+my_func = AD.Elem_function("x^2+1")
 my_func.get_val(3) → will produce the output: 10
 my_func.get_der(3) → will produce the output: 6
 ```
 
 Trigonometric functions (`sin x`, `cos x`, `tan x`)
 ```
-my_func = AD.Elem_function(sin(x))
+my_func = AD.Elem_function("sin(x)")
 my_func.get_val(0) → will produce the output: 0
 my_func.get_der(0) → will produce the output: 1
 ```
 
 Resetting a function value
 ```
-my_func = AD.Elem_function(2)
-my_func.set_val(x^2 + sin(y))
+my_func = AD.Elem_function("2")
+my_func.set_val("x^2 + sin(y)")
 ```
 
 ## Software Organization <a name="software_org"></a>
