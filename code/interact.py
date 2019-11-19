@@ -1,5 +1,5 @@
 from elem_function import exp, sin, cos, tan
-from autodiff import AutoDiffToy as ADT
+from adlib.autodiff import AutoDiffToy as ADT
 
 def main():
     #dummy x-value for checking function validity 
