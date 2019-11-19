@@ -1,6 +1,6 @@
 import pytest
-import elem_function as ef
-from autodiff import AutoDiffToy as ADT
+import adlib.elem_function as ef
+from adlib.autodiff import AutoDiffToy as ADT
 import numpy as np
 
 def test_exp1():

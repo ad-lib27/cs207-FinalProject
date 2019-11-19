@@ -1,10 +1,12 @@
 language: python
 python:
     - "3.6"
-before_install:
+install:
     - pip install pytest pytest-cov
     - pip install codecov
+    - pip install -r requirements.txt
+    - pip install .
 script:
-    - pytest --cov=./
+    - pytest --cov=adlib/
 after_success:
     - codecov
