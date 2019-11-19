@@ -8,8 +8,8 @@ def exp(x):
     """
     if isinstance(x, ADT):
         y = ADT()
-        y.der = np.exp(y.val) * y.der
-        y.val = np.exp(y.val)
+        y.der = np.exp(x.val) * x.der
+        y.val = np.exp(x.val)
         return y
     else:
         return np.exp(x)
@@ -22,8 +22,8 @@ def sin(x):
     """
     if isinstance(x, ADT):
         y = ADT()
-        y.der = np.cos(y.val) * y.der
-        y.val = np.sin(y.val)
+        y.der = np.cos(x.val) * x.der
+        y.val = np.sin(x.val)
         return y
     else:
         return np.sin(x)
@@ -35,8 +35,8 @@ def cos(x):
     """
     if isinstance(x, ADT):
         y = ADT()
-        y.der = - np.sin(y.val) * y.der
-        y.val = np.cos(y.val)
+        y.der = - np.sin(x.val) * x.der
+        y.val = np.cos(x.val)
         return y
     else:
         return np.cos(x)
@@ -48,8 +48,8 @@ def tan(x):
     """
     if isinstance(x, ADT):
         y = ADT()
-        y.der = (1 / np.cos(y.val))**2 * y.der
-        y.val = np.tan(y.val)
+        y.der = (1 / np.cos(x.val))**2 * x.der
+        y.val = np.tan(x.val)
         return y
     else:
         return np.tan(x)
