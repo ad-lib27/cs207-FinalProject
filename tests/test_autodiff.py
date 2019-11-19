@@ -40,7 +40,7 @@ def test_add_adt():
     x = ADT(3)
     y = x + x
     assert y.val == 6
-    assert y.der == 1
+    assert y.der == 2
 
 def test_radd_const():
     x = ADT(10)
