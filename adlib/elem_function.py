@@ -1,5 +1,5 @@
 import numpy as np
-from autodiff import AutoDiffToy as ADT
+from adlib.autodiff import AutoDiffToy as ADT
 
 def exp(x):
     """
