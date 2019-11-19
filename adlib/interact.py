@@ -24,6 +24,10 @@ def getxvalue():
     else:
         return x
 
+def result(a,b):
+    x = ADT(a)
+    return eval(b)
+
 def main():
     gf = getfunc()
     while gf == False:
@@ -33,9 +37,7 @@ def main():
     while gx == False:
         gx = getxvalue()
     print("Successful x-value entry!")
-    x = ADT(gx)
-    result = eval(gf)
-    print(f"Function Value: {result.val} Function Derivative: {result.der}")      
+    print(f"Function Value: {result(gx,gf).val} Function Derivative: {result(gx,gf).der}")      
 
 if __name__ == '__main__':
     main()
