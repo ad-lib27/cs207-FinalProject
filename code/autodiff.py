@@ -3,8 +3,8 @@ import numpy as np
 class AutoDiffToy:
     """
     Attributes:
-        self.val [float]: The value of the AutoDiff number
-        self.der [float]: The value of the derivative of the AutoDiff number
+        self.val [float]: The value of the AutoDiffToy number
+        self.der [float]: The value of the derivative of the AutoDiffToy number
     """
     def __init__(self, val=0.0, der=1.0):
         self.val = val
