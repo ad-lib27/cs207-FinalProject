@@ -1,4 +1,3 @@
-import unittest
 from adlib.interact import getfunc, getxvalue
 import mock
 import pytest
