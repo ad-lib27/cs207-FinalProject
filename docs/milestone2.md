@@ -159,13 +159,7 @@ The core data structures used in our final implementation will be classes (e.g.,
 
 ### autodiff <a name="autodiff"></a>
 
-We’ve written an `autodiff` module that contains the primary Class of this library, AutoDiffToy. The class contains two properties: `val` and `der` (representing the value and the derivative of a function), and several overloaded methods (the basic arithmetic operators, unary and binary). This allows the user to model any function of their pleasing as an AutoDiffToy by constructing its parts from the ground up (not unlike the progression of a forward mode evaluation trace).
-
-The AutoDiffToy takes in a mandatory argument, the value of the function. By default, `val` is 0 because the simplest possible AutoDiffToy would be a single scalar, so we’ve arbitrarily chosen 0 as its default value. On the other hand, AutoDiffToy can also take in an optional argument, the derivative of the function. By default, `der` is 1, since the derivative of any `x` is 1, regardless of its value.
-
-This allows the user to begin the construction of more complex functions by starting with `x = ADT(n)`, where `n` is the numerical value at which they’d eventually like to evaluate their function and its derivative. As one can observe from the code, the overloaded arithmetic operators support arithmetic operations between AutoDiffToy and AutoDiffToy, as well as between AutoDiffToy and float.
-
-As of this milestone, we’ve opted against providing getter and setter methods for this class, since they would be equivalent to accessing and updating `val` and `der` directly. It is the responsibility of the user to do this with care, as updating `val` and/or `der` would, by design, overwrite the current value and/or derivative of their function.
+TODO
 
 ### elem_function <a name="elem_function"></a>
 
