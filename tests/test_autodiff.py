@@ -5,15 +5,15 @@ import numpy as np
 # Testing the getters and setters
 def test_getters():
     x = ADT(10,2)
-    value = x.get_val()
-    derivative = x.get_der()
+    value = x.val
+    derivative = x.der
     assert value == 10
     assert derivative == 2
 
 def test_setters():
     x = ADT(10,5)
-    x.set_val(5)
-    x.set_der(15) 
+    x.val = 5
+    x.der = 15 
     assert x.val == 5
     assert x.der == 15
 
@@ -82,7 +82,7 @@ def test_mul_adt():
     x2 = ADT(3)
     y = x1 * x2
     assert y.val == 15
-    assert y.der == 8 
+    assert y.der == 8
 
 def test_rmul_const():
     x = ADT(6)
@@ -102,7 +102,7 @@ def test_div_adt():
     x2 = ADT(5)
     y = x1 / x2
     assert y.val == 3
-    assert y.der == -0.4 
+    assert y.der == -0.4
 
 def test_rdiv_const():
     x = ADT(5)
@@ -122,7 +122,7 @@ def test_power_adt():
     x2 = ADT(3)
     y = x1 ** x2
     assert y.val == 1
-    assert y.der == 3 
+    assert y.der == 3
 
 def test_rpower_const():
     x = ADT(2)
