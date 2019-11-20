@@ -17,6 +17,7 @@
   - [elem_function](#elem_function)
   - [interact](#interact)
   - [External Dependencies](#dependencies)
+- [Future Features](#future_features)
 
 
 ## Introduction <a name="introduction"></a>
@@ -33,6 +34,8 @@ As explained in the introduction, automatic differentiation evades both the appr
 For forward automatic differentiation, first, the function is rewritten as a map of elementary functions applied to the input, with each step in the map being represented by a distinct trace. For example, if the function is “5*x + 1”, some input trace x1 becomes trace x2 by being multiplied by 5, which becomes trace x3 by adding 1, and then x3 is the output. Every elementary function applied to the input is represented by such a change in the trace. This mapping is represented as a flowchart between traces, with elementary functions represented by arrows between traces.
 
 This map is used to generate the elementary function, elementary function value, elementary function derivative, and derivative value for each trace. In the case of multi-value inputs to the function (for example, “5*x +3*y +1”), the partial derivative is taken with respect to each input. For each trace, the elementary function and elementary function derivative are written in terms of the previously-evaluated, constituent traces, and evaluated at the values and derivative values of these constituent traces. In this way, the traces are recursively determined through a continuous application of the chain rule. The evaluated derivative of the final trace becomes the output, and forward automatic differentiation is complete.
+
+One can see, then, that what the forward mode is doing is efficiently computing the Jacobian-vector product given a "seed" vector.
 
 For example, if we wanted to compute `f(pi/16)` for `f(x) = x - exp(-2sin(4*x)**2)`, we could use the forward mode to generate the following evaluation trace:
 
@@ -193,3 +196,7 @@ This module uses an external library, `mock`, to execute the user’s string inp
 The `numpy` library supports math operations and elementary functions.
 The `pytest` library supports coverage testing.
 The `mock` library supports mock-inputs to the keyboard for the user interface (interact.py).
+
+## Future Features <a name="future_features"></a>
+
+For the final version of this project, we would plan to do reverse mode in addition to forward mode.
