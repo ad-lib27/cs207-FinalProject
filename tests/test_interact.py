@@ -5,7 +5,7 @@ import pytest
 def test_bad_function():
     with mock.patch('builtins.input', return_value="3x"):
         assert getfunc() == False
-    
+
 def test_good_function():
     with mock.patch('builtins.input', return_value="3*x+5"):
         assert getfunc() == "3*x+5"

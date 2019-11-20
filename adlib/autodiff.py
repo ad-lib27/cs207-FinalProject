@@ -10,20 +10,6 @@ class AutoDiffToy:
         self.val = val
         self.der = der
 
-    # Getters and Setters
-
-    def get_val(self):
-        return self.val
-
-    def set_val(self, val):
-        self.val = val
-
-    def get_der(self):
-        return self.der
-
-    def set_der(self, val):
-        self.der = val
-
     #  Unary operations (negation)
 
     def __neg__(self):
