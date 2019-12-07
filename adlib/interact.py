@@ -1,18 +1,18 @@
-from adlib27.elem_function import exp, sin, cos, tan
-from adlib27.autodiff import AutoDiff as AD
+from adlib.elem_function import exp, sin, cos, tan
+from adlib.autodiff import AutoDiffToy as ADT
 
 def getfunc():
-    #dummy x-value for checking function validity
+    #dummy x-value for checking function validity 
     x=0
     #collects function from user input, checks for validity
     #does not check if function is composed of functions outside of milestone scope
     func = input("Enter a Python-formatted function f(x) for evaluation:")
-    try:
+    try: 
         exec(func)
     except:
         print("This is not a valid function, please retry.")
         return False
-    else:
+    else: 
         return func
     #allowing repeated attempts for x-value entry
 
@@ -25,7 +25,7 @@ def getxvalue():
         return x
 
 def result(a,b):
-    x = AD(a)
+    x = ADT(a)
     return eval(b)
 
 def main():
@@ -37,7 +37,7 @@ def main():
     while gx == False:
         gx = getxvalue()
     print("Successful x-value entry!")
-    print(f"Function Value: {result(gx,gf).val} Function Derivative: {result(gx,gf).der}")
+    print(f"Function Value: {result(gx,gf).val} Function Derivative: {result(gx,gf).der}")      
 
 if __name__ == '__main__':
     main()
