@@ -1,4 +1,4 @@
-from adlib.interact import getfunc, getxvalue, result
+from adlib27.interact import getfunc, getxvalue, result
 import mock
 import pytest
 

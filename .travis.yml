@@ -7,6 +7,6 @@ install:
     - pip install -r requirements.txt
     - pip install .
 script:
-    - pytest --cov=adlib/
+    - pytest --cov=adlib27/
 after_success:
     - codecov
