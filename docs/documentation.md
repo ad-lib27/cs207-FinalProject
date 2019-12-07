@@ -3,7 +3,7 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Background](#background)
-- [How to Use adlib](#howtouse)
+- [How to Use adlib27](#howtouse)
   - [Examples](#examples)
 - [Software Organization](#software_org)
   - [Directory Structure](#structure)
@@ -54,12 +54,12 @@ And the corresponding evaluation graph would look like the below, where we indic
 
 ![alt text](Computational-Graph.png "Computational Graph Example")
 
-## How to Use adlib <a name="howtouse"></a>
+## How to Use adlib27 <a name="howtouse"></a>
 
 We envision that the end user will install our package in their own terminal using the pip install command.
 
 ```
-pip install adlib
+pip install adlib27
 ```
 
 After installing our package as well as the dependencies included in `requirements.txt`, the user can import it into their own program(s) as demonstrated in the following examples.
@@ -69,9 +69,9 @@ Alternatively, should the user elect to clone the GitHub repository directly int
 As mentioned in the sentence above the previous paragraph, if the user is a developer who would want to use our package in his/her code, he/she will need to import it the following way:
 
 ```
-import adlib
-import adlib.elem_function as ef
-from adlib.autodiff import AutoDiff as AD
+import adlib27
+import adlib27.elem_function as ef
+from adlib27.autodiff import AutoDiff as AD
 ```
 
 The user would be able to create an AutoDiff object by calling the constructor with a specific value as the argument, which will be the value at which the function and its derivative will be evaluated.
@@ -107,7 +107,7 @@ x.val → will produce the output: 1
 ### Directory Structure <a name="structure"></a>
 ```
 cs207-FinalProject/
-    adlib/
+    adlib27/
         __init__.py
         autodiff.py
         interact.py
@@ -149,7 +149,7 @@ cs207-FinalProject/
 
 ### Distribution <a name="dist"></a>
 
-  The package will be available on PyPI and users can install the package using ```pip install adlib```.
+  The package will be available on PyPI and users can install the package using ```pip install adlib27```.
 
 ## Implementation <a name="implementation"></a>
 
