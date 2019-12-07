@@ -71,32 +71,32 @@ As mentioned in the sentence above the previous paragraph, if the user is a deve
 ```
 import adlib
 import adlib.elem_function as ef
-from adlib.autodiff import AutoDiffToy as ADT
+from adlib.autodiff import AutoDiff as AD
 ```
 
-The user would be able to create an AutoDiffToy object by calling the constructor with a specific value as the argument, which will be the value at which the function and its derivative will be evaluated.
+The user would be able to create an AutoDiff object by calling the constructor with a specific value as the argument, which will be the value at which the function and its derivative will be evaluated.
 
 ### Examples <a name="examples"></a>
 
 Simple scalar function
 ```
-x = ADT(3)
-my_func = ADT(x**2 + 1)
+x = AD(3)
+my_func = AD(x**2 + 1)
 my_func.val → will produce the output: 10
 my_func.der → will produce the output: 6
 ```
 
 Trigonometric scalar function (`sin x`, `cos x`, `tan x`)
 ```
-x = ADT(0)
-my_func = ADT(ef.sin(x))
+x = AD(0)
+my_func = AD(ef.sin(x))
 my_func.val → will produce the output: 0
 my_func.der → will produce the output: 1
 ```
 
 Resetting a function value
 ```
-x = ADT(0)
+x = AD(0)
 x.val → will produce the output: 0
 x.val = 1
 x.val → will produce the output: 1
@@ -127,7 +127,7 @@ cs207-FinalProject/
 
   - autodiff.py
 
-    This module contains our automatic differentiation class, AutoDiffToy, which is meant to be imported by developers and used to instantiate AutoDiffToy objects. The class overloads Python’s arithmetic operators in order to support the construction of more complex AutoDiffToy objects.
+    This module contains our automatic differentiation class, AutoDiff, which is meant to be imported by developers and used to instantiate AutoDiff objects. The class overloads Python’s arithmetic operators in order to support the construction of more complex AutoDiff objects.
 
   - interact.py
 
@@ -135,7 +135,7 @@ cs207-FinalProject/
 
   - elem_function.py
 
-    This module is used in conjunction with autodiff.py to support basic elementary functions (e.g., `exp`, `sin`, `cos`, `tan`) in the construction of more complex AutoDiffToy objects. Each of these elementary functions take in an AutoDiffToy object as input and return a new AutoDiffToy object with the appropriate value and derivative (by passing in the input’s value and derivative to the corresponding numpy function). If, instead of an AutoDiffToy object, a float value is passed in, the elementary function will simply pass in the float value to the corresponding numpy function and return that new value instead.
+    This module is used in conjunction with autodiff.py to support basic elementary functions (e.g., `exp`, `sin`, `cos`, `tan`) in the construction of more complex AutoDiff objects. Each of these elementary functions take in an AutoDiff object as input and return a new AutoDiff object with the appropriate value and derivative (by passing in the input’s value and derivative to the corresponding numpy function). If, instead of an AutoDiff object, a float value is passed in, the elementary function will simply pass in the float value to the corresponding numpy function and return that new value instead.
 
 ### Tests <a name="tests"></a>
   - Tests are in the tests/ directory.
@@ -159,11 +159,11 @@ The core data structures used in our final implementation will be classes (e.g.,
 
 ### autodiff <a name="autodiff"></a>
 
-We’ve written an `autodiff` module that contains the primary Class of this library, AutoDiffToy. The class contains two properties: `val` and `der` (representing the value and the derivative of a function), and several overloaded methods (the basic arithmetic operators, unary and binary). This allows the user to model any function of their pleasing as an AutoDiffToy by constructing its parts from the ground up (not unlike the progression of a forward mode evaluation trace).
+We’ve written an `autodiff` module that contains the primary Class of this library, AutoDiff. The class contains two properties: `val` and `der` (representing the value and the derivative of a function), and several overloaded methods (the basic arithmetic operators, unary and binary). This allows the user to model any function of their pleasing as an AutoDiff by constructing its parts from the ground up (not unlike the progression of a forward mode evaluation trace).
 
-The AutoDiffToy takes in a mandatory argument, the value of the function. By default, `val` is 0 because the simplest possible AutoDiffToy would be a single scalar, so we’ve arbitrarily chosen 0 as its default value. On the other hand, AutoDiffToy can also take in an optional argument, the derivative of the function. By default, `der` is 1, since the derivative of any `x` is 1, regardless of its value.
+The AutoDiff takes in a mandatory argument, the value of the function. By default, `val` is 0 because the simplest possible AutoDiff would be a single scalar, so we’ve arbitrarily chosen 0 as its default value. On the other hand, AutoDiff can also take in an optional argument, the derivative of the function. By default, `der` is 1, since the derivative of any `x` is 1, regardless of its value.
 
-This allows the user to begin the construction of more complex functions by starting with `x = ADT(n)`, where `n` is the numerical value at which they’d eventually like to evaluate their function and its derivative. As one can observe from the code, the overloaded arithmetic operators support arithmetic operations between AutoDiffToy and AutoDiffToy, as well as between AutoDiffToy and float.
+This allows the user to begin the construction of more complex functions by starting with `x = AD(n)`, where `n` is the numerical value at which they’d eventually like to evaluate their function and its derivative. As one can observe from the code, the overloaded arithmetic operators support arithmetic operations between AutoDiff and AutoDiff, as well as between AutoDiff and float.
 
 As of this milestone, we’ve opted against providing getter and setter methods for this class, since they would be equivalent to accessing and updating `val` and `der` directly. It is the responsibility of the user to do this with care, as updating `val` and/or `der` would, by design, overwrite the current value and/or derivative of their function.
 
@@ -180,7 +180,7 @@ We’ve written an `elem_function` module to be able to support a variety of ele
 - Hyperbolic functions (`sinh(x)`, `cosh(x)`, `tanh(x)`)
 - All functions obtained by adding, subtracting, multiplying, dividing, and composing any of the above functions.
 
-The idea is that the user (in their driver code), first instantiates an AutoDiffToy object (as via `x = ADT(n)`, where `n` is the value at which they’d like to evaluate the function). Then, the user can construct whichever function they’d like by calling any of the elementary functions supported in this module as needed (e.g., `y = ADT(5*x + ef.sin(x))`). If the initial input `x` is defined as a constant (as via `x = n`, where `n` is some floating-point value), the elementary functions supported in this module will simply pass in the scalar `x` into the corresponding `numpy` function and return that value.
+The idea is that the user (in their driver code), first instantiates an AutoDiff object (as via `x = AD(n)`, where `n` is the value at which they’d like to evaluate the function). Then, the user can construct whichever function they’d like by calling any of the elementary functions supported in this module as needed (e.g., `y = AD(5*x + ef.sin(x))`). If the initial input `x` is defined as a constant (as via `x = n`, where `n` is some floating-point value), the elementary functions supported in this module will simply pass in the scalar `x` into the corresponding `numpy` function and return that value.
 
 ### interact <a name="interact"></a>
 
