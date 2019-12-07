@@ -149,11 +149,11 @@ class AutoDiff:
         """
         try: # This should work if both are of AutoDiff class H(x) = F(x) ** G(X)
             left = self.val ** (other.val - 1)
-            right = other.val * self.der + self.val * np.log(self.val) * other.der
+            right = (other.val * self.der) + (self.val * np.log(self.val) * other.der)
             new_der = left * right
             return AutoDiff(self.val ** other.val, new_der)
         except AttributeError: # If not, we will catch the error and do the exponent the following way
-            return AutoDiff(self.val ** other, other * self.val * self.der)
+            return AutoDiff(self.val ** other, other * (self.val ** (other - 1)) * self.der)
 
     def __rpow__(self, other):
         """
