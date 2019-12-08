@@ -15,15 +15,27 @@ def test_exp2():
     x = 1
     assert ef.exp(x) == np.exp(x)
 
+
 def test_sin1():
+    x = 1
+    assert ef.sin(x) == np.sin(x)
+
+# one value for one variable
+def test_sin1():
+    # default AD object with .val=[0.0]
     x = AD()
+    y = ef.sin(x)
+    assert y.val == pytest.approx(np.sin(0))
+    assert y.der == pytest.approx(np.cos(0) * 1)
+
+# multiple value for one variable
+def test_sin2():
+    # AD object with .val=[1,2]
+    x = AD(val=[1,2])
     y = ef.sin(x)
     assert y.val == np.sin(0)
     assert y.der == np.cos(0) * 1
 
-def test_sin2():
-    x = 1
-    assert ef.sin(x) == np.sin(x)
 
 def test_cos1():
     x = AD()
