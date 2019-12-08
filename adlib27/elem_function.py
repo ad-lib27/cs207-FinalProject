@@ -11,10 +11,10 @@ def sin(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [np.cos(x.val[i]) * x.der[i][j]]
+                der[i] += [np.cos(x.val[j]) * x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.sin(x.val[i])
+            val += [np.sin(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -31,10 +31,10 @@ def cos(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [- np.sin(x.val[i]) * x.der[i][j]]
+                der[i] += [- np.sin(x.val[j]) * x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.cos(x.val[i])
+            val += [np.cos(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -51,10 +51,10 @@ def tan(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [(1 / np.cos(x.val[i]))**2 * x.der[i][j]]
+                der[i] += [(1 / np.cos(x.val[j]))**2 * x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.tan(x.val[i])
+            val += [np.tan(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -72,10 +72,10 @@ def arcsin(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [1 / np.sqrt(1 - x.val[i] **2) * x.der[i][j]]
+                der[i] += [1 / np.sqrt(1 - x.val[j] **2) * x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.arcsin(x.val[i])
+            val += [np.arcsin(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -93,10 +93,10 @@ def arccos(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [-1 / np.sqrt(1 - x.val[i] **2) * x.der[i][j]]
+                der[i] += [-1 / np.sqrt(1 - x.val[j] **2) * x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.arccos(x.val[i])
+            val += [np.arccos(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -114,10 +114,10 @@ def arctan(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [1 / (1 + x.val[i] **2) * x.der[i][j]]
+                der[i] += [1 / (1 + x.val[j] **2) * x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.arctan(x.val[i])
+            val += [np.arctan(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -136,10 +136,10 @@ def exp(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [np.exp(x.val[i]) * x.der[i][j]]
+                der[i] += [np.exp(x.val[j]) * x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.exp(x.val[i])
+            val += [np.exp(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -157,10 +157,10 @@ def sinh(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [np.cosh(x.val[i]) * x.der[i][j]]
+                der[i] += [np.cosh(x.val[j]) * x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.sinh(x.val[i])
+            val += [np.sinh(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -177,10 +177,10 @@ def cosh(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [np.sinh(x.val[i]) * x.der[i][j]]
+                der[i] += [np.sinh(x.val[j]) * x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.cosh(x.val[i])
+            val += [np.cosh(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -198,10 +198,10 @@ def tanh(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [x.der[i][j] / np.cosh(x.val[i])]
+                der[i] += [x.der[i][j] / np.cosh(x.val[j])]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.tanh(x.val[i])
+            val += [np.tanh(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -220,10 +220,10 @@ def logistic(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [(1/(1+np.exp(-x.val[i])))*(1-1/(1+np.exp(-x.val[i])))*x.der[i][j]]
+                der[i] += [(1/(1+np.exp(-x.val[j])))*(1-1/(1+np.exp(-x.val[j])))*x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = 1/(1+np.exp(-x.val[i]))
+            val += [1/(1+np.exp(-x.val[i]))]
 
         y = AD(val=val, der=der)
         return y
@@ -241,10 +241,10 @@ def log(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [(1/x.val[i])*x.der[i][j]]
+                der[i] += [(1/x.val[j])*x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.log(x.val[i])
+            val += [np.log(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -261,10 +261,10 @@ def log2(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [(1/(x.val[i]*np.log(2)))*x.der[i][j]]
+                der[i] += [(1/(x.val[j]*np.log(2)))*x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.log2(x.val[i])
+            val += [np.log2(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -282,10 +282,10 @@ def log10(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [(1/(x.val[i]*np.log(10)))*x.der[i][j]]
+                der[i] += [(1/(x.val[j]*np.log(10)))*x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.log10(x.val[i])
+            val += [np.log10(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
@@ -302,10 +302,10 @@ def logb(x, base):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [(1/(x.val[i]*np.log(base)))*x.der[i][j]]
+                der[i] += [(1/(x.val[j]*np.log(base)))*x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.log(x.val[i]) / np.log(base)
+            val += [np.log(x.val[i]) / np.log(base)]
 
         y = AD(val=val, der=der)
         return y
@@ -323,10 +323,10 @@ def sqrt(x):
         for i in range(len(x.der)):
             der += [list()]
             for j in range(len(x.der[i])):
-                der[i] += [0.5/np.sqrt(x.val[i]) * x.der[i][j]]
+                der[i] += [0.5/np.sqrt(x.val[j]) * x.der[i][j]]
         val = list()
         for i in range(len(x.val)):
-            val[i] = np.sqrt(x.val[i])
+            val += [np.sqrt(x.val[i])]
 
         y = AD(val=val, der=der)
         return y
