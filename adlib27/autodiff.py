@@ -204,7 +204,7 @@ class AutoDiff:
                 for i in range(len(self.der)):
                     der += [list()]
                     for j in range(len(self.der[i])):
-                        der[i] += [(self.val[i][j] * other.der[i][j]) + (self.der[i][j] * other.val[i][j])]
+                        der[i] += [(self.val[i] * other.der[i][j]) + (self.der[i][j] * other.val[i])]
             except:
                 raise ValueError("Can't multiply AutoDiff numbers of different dimensions.")
         else:
@@ -260,7 +260,7 @@ class AutoDiff:
                 for i in range(len(self.der)):
                     der += [list()]
                     for j in range(len(self.der[i])):
-                        der[i] += [((other.val[i][j] * self.der[i][j]) - (self.val[i][j] * other.der[i][j])) / (other.val[i][j] ** 2)]
+                        der[i] += [((other.val[i] * self.der[i][j]) - (self.val[i] * other.der[i][j])) / (other.val[i] ** 2)]
             except:
                 raise ValueError("Can't divide AutoDiff numbers of different dimensions.")
         else:
@@ -300,7 +300,7 @@ class AutoDiff:
         for i in range(len(self.der)):
             der += [list()]
             for j in range(len(self.der[i])):
-                der[i] += [(-other / self.val[i][j] ** 2) * self.der[i][j]]
+                der[i] += [(-other / self.val[i] ** 2) * self.der[i][j]]
 
         # return quotient
         return AutoDiff(val=val, der=der)
@@ -332,7 +332,7 @@ class AutoDiff:
                 for i in range(len(self.der)):
                     der += [list()]
                     for j in range(len(self.der[i])):
-                        der[i] += [(self.val[i][j] ** (other.val[i][j] - 1)) * ((other.val[i][j] * self.der[i][j]) + (self.val[i][j] * np.log(self.val[i][j]) * other.der[i][j]))]
+                        der[i] += [(self.val[i] ** (other.val[i] - 1)) * ((other.val[i] * self.der[i][j]) + (self.val[i] * np.log(self.val[i]) * other.der[i][j]))]
             except:
                 raise ValueError("Can't calculate exponential with AutoDiff numbers of different dimensions.")
         else:
@@ -344,7 +344,7 @@ class AutoDiff:
             for i in range(len(self.der)):
                 der += [list()]
                 for j in range(len(self.der[i])):
-                    der[i] += [other * (self.val[i][j] ** (other - 1)) * self.der[i][j]]
+                    der[i] += [other * (self.val[i] ** (other - 1)) * self.der[i][j]]
 
         # return exponential
         return AutoDiff(val=val, der=der)
@@ -372,7 +372,7 @@ class AutoDiff:
         for i in range(len(self.der)):
             der += [list()]
             for j in range(len(self.der[i])):
-                der[i] += [np.log(other) * (other ** self.val[i][j]) * self.der[i][j]]
+                der[i] += [np.log(other) * (other ** self.val[i]) * self.der[i][j]]
 
         # return exponential
         return AutoDiff(val=val, der=der)

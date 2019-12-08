@@ -19,5 +19,7 @@ def test_good_value():
         assert getxvalue() == 2
 
 def test_result():
-    assert result(3,"3*x").val == 9
-    assert result(3,"3*x").der == 3
+    r = result([3],"3*x")
+    assert r.val == pytest.approx([9])
+    for d in r.der:
+        assert d == pytest.approx([3])
