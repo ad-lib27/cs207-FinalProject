@@ -27,6 +27,21 @@ def test_neg():
     for d in y.der:
         assert d == pytest.approx([-1])
 
+def test_neg_many_var():
+    x = AD(val=[10], index=0, magnitude=2)
+    y = AD(val=[20], index=1, magnitude=2)
+    z = -(x + y)
+    assert z.val == pytest.approx([-30])
+    for d in z.der:
+        assert d == pytest.approx([-1])
+
+def test_neg_many_val():
+    x = AD(val=[10, 1, 3, 4])
+    y = -x
+    assert y.val == pytest.approx([-10, -1, -3, -4])
+    for d in y.der:
+        assert d == pytest.approx([-1, -1, -1, -1])
+
 def test_pos():
     x = AD(val=[-15])
     y = +x
