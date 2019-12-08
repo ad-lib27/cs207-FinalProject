@@ -204,10 +204,6 @@ class AutoDiff:
                 for i in range(len(self.der)):
                     der += [list()]
                     for j in range(len(self.der[i])):
-                        print(self.val)
-                        print(other.der)
-                        print(self.der)
-                        print(other.val)
                         der[i] += [(self.val[i] * other.der[i][j]) + (self.der[i][j] * other.val[i])]
             except:
                 raise ValueError("Can't multiply AutoDiff numbers of different dimensions.")
