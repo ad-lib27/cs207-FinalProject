@@ -6,9 +6,17 @@ class AutoDiff:
         self.val [float]: The value of the AutoDiff number
         self.der [float]: The value of the derivative of the AutoDiff number
     """
-    def __init__(self, val=0.0, der=1.0):
+    def __init__(self, val=[0.0], index=0, magnitude=1, der=None):
         self.val = val
-        self.der = der
+        self.vector_index = index
+        self.vector_magnitude = magnitude
+        if der is None:
+            self.der = list()
+            for i in range(self.vector_magnitude):
+                self.der += [0.0 for j in range(len(self.val))]
+            self.der[self.vector_index] = [1.0 for j in range(len(self.val))]
+        else:
+            self.der = der
 
     #  Unary operations (negation)
 
@@ -20,7 +28,17 @@ class AutoDiff:
         Returns:
             AutoDiff: A new AutoDiff number after the negation
         """
-        return AutoDiff(-self.val, -self.der)
+        # negate the derivatives
+        for i in range(len(self.der)):
+            for j in range(len(self.der[i])):
+                self.der[i][j] = -self.der[i][j]
+
+        # negate the values
+        for i in range(len(self.val)):
+            self.val[i] = -self.val[i]
+
+        return AutoDiff(val=self.val, index=self.vector_index,
+                        magnitude=self.vector_magnitude, der=self.der)
 
     def __pos__(self):
         """
