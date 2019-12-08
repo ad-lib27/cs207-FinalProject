@@ -210,9 +210,6 @@ def tanh(x):
 
 # Logistic function
 
-def help_logistic(x):
-    return 1/(1+np.exp(-x))
-
 def logistic(x):
     """
     :param x: a scalar or an AD object
