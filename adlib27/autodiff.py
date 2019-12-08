@@ -13,7 +13,7 @@ class AutoDiff:
             self.vector_magnitude = magnitude
             self.der = list()
             for i in range(self.vector_magnitude):
-                self.der += [0.0 for j in range(len(self.val))]
+                self.der += [[0.0 for j in range(len(self.val))]]
             self.der[self.vector_index] = [1.0 for j in range(len(self.val))]
         else:
             self.der = der
