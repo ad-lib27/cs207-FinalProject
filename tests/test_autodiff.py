@@ -4,128 +4,147 @@ import numpy as np
 
 # Testing the getters and setters
 def test_getters():
-    x = AD(10,2)
+    x = AD(val=[10])
     value = x.val
     derivative = x.der
-    assert value == 10
-    assert derivative == 2
+    assert value == pytest.approx([10])
+    for d in derivative:
+        assert d == pytest.approx([1])
 
 def test_setters():
-    x = AD(10,5)
-    x.val = 5
-    x.der = 15
-    assert x.val == 5
-    assert x.der == 15
+    x = AD(val=[10])
+    x.val[0] = 5
+    x.der[0][0] = 0
+    assert x.val == pytest.approx([5])
+    for d in x.der:
+        assert d == pytest.approx([0])
 
 # Testing the Unary operations
 def test_neg():
-    x = AD(10)
+    x = AD(val=[10])
     y = -x
-    assert y.val == -10
-    assert y.der == -1
+    assert y.val == pytest.approx([-10])
+    for d in y.der:
+        assert d == pytest.approx([-1])
 
 def test_pos():
-    x = AD(-15)
+    x = AD(val=[-15])
     y = +x
-    assert y.val == -15
-    assert y.der == 1
+    assert y.val == pytest.approx([-15])
+    for d in y.der:
+        assert d == pytest.approx([1])
 
 # Testing the basic operations (+, -, *, /)
 # Testing the add and radd
 def test_add_const():
-    x = AD(10)
+    x = AD(val=[10])
     y = x + 22
-    assert y.val == 32
-    assert y.der == 1
+    assert y.val == pytest.approx([32])
+    for d in y.der:
+        assert d == pytest.approx([1])
 
 def test_add_AD():
-    x = AD(3)
+    x = AD(val=[3])
     y = x + x
-    assert y.val == 6
-    assert y.der == 2
+    assert y.val == pytest.approx([6])
+    for d in y.der:
+        assert d == pytest.approx([2])
 
 def test_radd_const():
-    x = AD(10)
+    x = AD(val=[10])
     y = 5 + x
-    assert y.val == 15
-    assert y.der == 1
+    assert y.val == pytest.approx([15])
+    for d in y.der:
+        assert d == pytest.approx([1])
 
 # Testing the sub and rsub
 def test_sub_const():
-    x = AD(10)
+    x = AD(val=[10])
     y = x - 3
-    assert y.val == 7
-    assert y.der == 1
+    assert y.val == pytest.approx([7])
+    for d in y.der:
+        assert d == pytest.approx([1])
 
 def test_sub_AD():
-    x1 = AD(14)
-    x2 = AD(3)
+    x1 = AD(val=[14])
+    x2 = AD(val=[3])
     y = x1 - x2
-    assert y.val == 11
-    assert y.der == 0
+    assert y.val == pytest.approx([11])
+    for d in y.der:
+        assert d == pytest.approx([0])
 
 def test_rsub_const():
-    x = AD(1)
+    x = AD(val=[1])
     y = 7 - x
-    assert y.val == 6
-    assert y.der == -1
+    assert y.val == pytest.approx([6])
+    for d in y.der:
+        assert d == pytest.approx([-1])
 
 # Testing the mul and rmul
 def test_mul_const():
-    x = AD(10)
+    x = AD(val=[10])
     y = x*3
-    assert y.val == 30
-    assert y.der == 3
+    assert y.val == pytest.approx([30])
+    for d in y.der:
+        assert d == pytest.approx([3])
 
 def test_mul_AD():
-    x1 = AD(5)
-    x2 = AD(3)
+    x1 = AD(val=[5])
+    x2 = AD(val=[3])
     y = x1 * x2
-    assert y.val == 15
-    assert y.der == 8
+    assert y.val == pytest.approx([15])
+    for d in y.der:
+        assert d == pytest.approx([8])
 
 def test_rmul_const():
-    x = AD(6)
+    x = AD(val=[6])
     y = 2*x
-    assert y.val == 12
-    assert y.der == 2
+    assert y.val == pytest.approx([12])
+    for d in y.der:
+        assert d == pytest.approx([2])
 
 # Testing the div and rdiv
 def test_div_const():
-    x = AD(20)
+    x = AD(val=[20])
     y = x/4
-    assert y.val == 5
-    assert y.der == 0.25
+    assert y.val == pytest.approx([5])
+    for d in y.der:
+        assert d == pytest.approx([0.25])
 
 def test_div_AD():
-    x1 = AD(15)
-    x2 = AD(5)
+    x1 = AD(val=[15])
+    x2 = AD(val=[5])
     y = x1 / x2
-    assert y.val == 3
-    assert y.der == -0.4
+    assert y.val == pytest.approx([3])
+    for d in y.der:
+        assert d == pytest.approx([-0.4])
 
 def test_rdiv_const():
-    x = AD(5)
+    x = AD(val=[5])
     y = 10/x
-    assert y.val == 2
-    assert y.der == -0.4
+    assert y.val == pytest.approx([2])
+    for d in y.der:
+        assert d == pytest.approx([-0.4])
 
 # Testing the power and rpower
 def test_power_const():
-    x = AD(5)
+    x = AD(val=[5])
     y = x**2
-    assert y.val == 25
-    assert y.der == 10
+    assert y.val == pytest.approx([25])
+    for d in y.der:
+        assert d == pytest.approx([10])
 
 def test_power_AD():
-    x1 = AD(1)
-    x2 = AD(3)
+    x1 = AD(val=[1])
+    x2 = AD(val=[3])
     y = x1 ** x2
-    assert y.val == 1
-    assert y.der == 3
+    assert y.val == pytest.approx([1])
+    for d in y.der:
+        assert d == pytest.approx([3])
 
 def test_rpower_const():
-    x = AD(2)
+    x = AD(val=[2])
     y = 10**x
-    assert y.val == 100
-    assert y.der == 10**2* np.log(10)
+    assert y.val == pytest.approx([100])
+    for d in y.der:
+        assert d == pytest.approx([10**2* np.log(10)])
