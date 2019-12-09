@@ -4,6 +4,11 @@ from adlib27.autodiff import AutoDiff as AD
 import numpy as np
 import math
 
+
+def test_sin0():
+    x = 1
+    assert ef.sin(x) == pytest.approx(np.sin(x))
+
 # one value for one variable
 def test_sin1():
     # default AD object with .val=[0.0]
@@ -43,6 +48,9 @@ def test_sin4():
     assert y.der[0] == pytest.approx(np.cos([3,5]) * 1)
     assert y.der[1] == pytest.approx(np.cos([3,5]) * 1)
 
+def test_cos0():
+    x = 1
+    assert ef.cos(x) == pytest.approx(np.cos(x))
 
 # one value for one variable
 def test_cos1():
@@ -82,6 +90,10 @@ def test_cos4():
     assert y.val == pytest.approx(np.cos([3,5]))
     assert y.der[0] == pytest.approx(-np.sin([3,5]) * 1)
     assert y.der[1] == pytest.approx(-np.sin([3,5]) * 1)
+
+def test_tan0():
+    x = 1
+    assert ef.tan(x) == pytest.approx(np.tan(x))
 
 # one value for one variable
 def test_tan1():
@@ -125,6 +137,10 @@ def test_tan4():
 
 # Inverse trig functions
 
+def test_arcsin0():
+    x = 1
+    assert ef.arcsin(x) == pytest.approx(np.arcsin(x))
+
 # one value for one variable
 def test_arcsin1():
     # default AD object with .val=[0.0]
@@ -143,6 +159,11 @@ def test_arcsin4():
     assert y.val == pytest.approx(np.arcsin([0.3,0.5]))
     assert y.der[0] == pytest.approx([1.0482848367219182, 1.1547005383792517])
     assert y.der[1] == pytest.approx([1.0482848367219182, 1.1547005383792517])
+
+
+def test_arccos0():
+    x = 1
+    assert ef.arccos(x) == pytest.approx(np.arccos(x))
 
 # one value for one variable
 def test_arccos1():
@@ -163,6 +184,11 @@ def test_arccos4():
     assert y.der[0] == pytest.approx([-1.4002800840280099, -2.294157338705618])
     assert y.der[1] == pytest.approx([-1.4002800840280099, -2.294157338705618])
 
+
+def test_arctan0():
+    x = 1
+    assert ef.arctan(x) == pytest.approx(np.arctan(x))
+
 # one value for one variable
 def test_arctan1():
     # default AD object with .val=[0.0]
@@ -181,6 +207,10 @@ def test_arctan4():
     assert y.val == pytest.approx(np.arctan([0.7,0.9]))
     assert y.der[0] == pytest.approx([0.6711409395973155, 0.5524861878453039])
     assert y.der[1] == pytest.approx([0.6711409395973155, 0.5524861878453039])
+
+def test_exp0():
+    x = 1
+    assert ef.exp(x) == pytest.approx(np.exp(x))
 
 # one value for one variable
 def test_exp1():
@@ -223,6 +253,9 @@ def test_exp4():
 
 # Hyperbolic functions (sinh, cosh, tanh)
 
+def test_sinh0():
+    x = 1
+    assert ef.sinh(x) == pytest.approx(np.sinh(x))
 
 # one value for one variable
 def test_sinh1():
@@ -263,6 +296,10 @@ def test_sinh4():
     assert y.der[0] == pytest.approx(np.cosh([3,5]) * 1)
     assert y.der[1] == pytest.approx(np.cosh([3,5]) * 1)
 
+def test_cosh0():
+    x = 1
+    assert ef.cosh(x) == pytest.approx(np.cosh(x))
+
 # one value for one variable
 def test_cosh1():
     # default AD object with .val=[0.0]
@@ -301,6 +338,10 @@ def test_cosh4():
     assert y.val == pytest.approx(np.cosh([3,5]))
     assert y.der[0] == pytest.approx(np.sinh([3,5]) * 1)
     assert y.der[1] == pytest.approx(np.sinh([3,5]) * 1)
+
+def test_tanh0():
+    x = 1
+    assert ef.tanh(x) == pytest.approx(np.tanh(x))
 
 # one value for one variable
 def test_tanh1():
@@ -364,6 +405,10 @@ def test_logistic4():
     assert y.der[0] == pytest.approx([0.045176659730, 0.006648056670])
     assert y.der[1] == pytest.approx([0.045176659730, 0.006648056670])
 
+def test_log0():
+    x = 1
+    assert ef.log(x) == pytest.approx(np.log(x))
+
 # one value for one variable
 def test_log1():
     # default AD object with .val=[0.0]
@@ -383,6 +428,11 @@ def test_log4():
     assert y.val == pytest.approx(np.log([3,5]))
     assert y.der[0] == pytest.approx([0.3333333333333333, 0.2])
     assert y.der[1] == pytest.approx([0.3333333333333333, 0.2])
+
+
+def test_log2_0():
+    x = 1
+    assert ef.log2(x) == pytest.approx(np.log2(x))
 
 # one value for one variable
 def test_log2_1():
@@ -404,6 +454,10 @@ def test_log2_4():
     assert y.der[0] == pytest.approx([0.48089834696298783, 0.28853900817779266])
     assert y.der[1] == pytest.approx([0.48089834696298783, 0.28853900817779266])
 
+def test_log10_0():
+    x = 1
+    assert ef.log10(x) == pytest.approx(np.log10(x))
+
 # one value for one variable
 def test_log10_1():
     # default AD object with .val=[0.0]
@@ -423,6 +477,10 @@ def test_log10_4():
     assert y.val == pytest.approx(np.log10([3,5]))
     assert y.der[0] == pytest.approx([0.14476482730108392, 0.08685889638065035])
     assert y.der[1] == pytest.approx([0.14476482730108392, 0.08685889638065035])
+
+def test_logb():
+    x = 1
+    assert ef.logb(x,2) == pytest.approx(math.log(x,2))
 
 # one value for one variable
 def test_logb1():
@@ -444,6 +502,11 @@ def test_logb4():
     assert y.val[1] == pytest.approx(math.log(5, 3))
     assert y.der[0] == pytest.approx([0.30341307554227914, 0.18204784532536747])
     assert y.der[1] == pytest.approx([0.30341307554227914, 0.18204784532536747])
+
+def test_sqrt0():
+    x = 1
+    assert ef.sqrt(x) == pytest.approx(np.sqrt(x))
+
 
 # one value for one variable
 def test_sqrt1():
