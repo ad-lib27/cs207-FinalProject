@@ -1,5 +1,5 @@
 from adlib27.elem_function import exp, sin, cos, tan, arcsin, arccos, arctan, sinh, cosh, tanh, logistic, log, log2, log10, logb, sqrt
-from adlib27.autodiff import AutoDiff as AD 
+from adlib27.autodiff import AutoDiff as AD
 
 
 def getvars():
@@ -18,7 +18,7 @@ def getvars():
                 more = True
             else:
                 more = False
-    print("Your variables are: ", variables)             
+    print("Your variables are: ", variables)
     return variables
 
 def getfunc(variables):
@@ -41,7 +41,7 @@ def getfunc(variables):
     except:
         print("This is not a valid function, please retry.")
         return False
-    else: 
+    else:
         return func
     #allowing repeated attempts for x-value entry
 
@@ -51,7 +51,7 @@ def getpointnum():
     except:
         print("This is not a valid number of evaluation points, please retry")
         return False
-    else: 
+    else:
         return x
 
 def getvalues(variables, pointnum):
@@ -63,15 +63,15 @@ def getvalues(variables, pointnum):
         values.append(input().strip('][').split(', '))
         i += 1
     while j < len(values):
-        try: 
+        try:
             values[j] = list(map(float, values[j]))
             j += 1
-        except: 
+        except:
             print("Not all evaluation values are valid, please re-start entries.")
             return False
     return values
 
-def get_result(values,variables,func):
+def getresult(values,variables,func):
     funcdict = {"exp": exp, "sin": sin, "cos": cos, "tan": tan, "arcsin": arcsin, "arccos": arccos, "arctan": arctan, "sinh": sinh, "cosh": cosh, "tanh": tanh, "logistic": logistic, "log": log, "log2": log2, "log10": log10, "logb": logb, "sqrt": sqrt}
     i = 0
     ADlist = []
@@ -88,7 +88,7 @@ def reprresult(values, variables, result, pointnum, func):
         a = 0
         while a < pointnum:
             b = 0
-            pointsrep = [] 
+            pointsrep = []
             while b < len(variables):
                 pointrep = []
                 pointrep.append(str(variables[b]))
@@ -105,7 +105,7 @@ def reprresult(values, variables, result, pointnum, func):
         a = 0
         while a < pointnum:
             b = 0
-            drep = [] 
+            drep = []
             while b < len(variables):
                 ddrep = []
                 ddrep.append("df/d")
@@ -120,7 +120,7 @@ def reprresult(values, variables, result, pointnum, func):
 
     vals = reprvals(values, variables, pointnum)
     ders = reprders(result, variables, pointnum)
-    c = 0  
+    c = 0
     reslist = []
 
     while c < pointnum:
@@ -148,7 +148,7 @@ def main():
     gx = getvalues(gv, gp)
     while gx == False: gx = getvalues(gv, gp)
     print("Successful value entry!\n")
-    print(reprresult(gx,gv,get_result(gx,gv,gf),gp,gf))
+    print(reprresult(gx,gv,getresult(gx,gv,gf),gp,gf))
 
 if __name__ == '__main__':
     main()
