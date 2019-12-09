@@ -1,8 +1,3 @@
-import math
-
-from adlib27.autodiff import AutoDiff as AD
-from adlib27.elem_function import sin
-
 # function to perform optimization
 def optimize(ad_func, domain, vector_index=0):
     # helper function to determine whether an inflection point is a max or min
