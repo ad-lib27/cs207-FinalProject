@@ -1,4 +1,5 @@
 import numpy as np
+
 from adlib27.autodiff import AutoDiff as AD
 
 def sin(x):

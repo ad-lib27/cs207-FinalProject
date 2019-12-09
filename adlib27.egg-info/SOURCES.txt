@@ -1,0 +1,12 @@
+README.md
+setup.cfg
+setup.py
+adlib27/__init__.py
+adlib27/autodiff.py
+adlib27/elem_function.py
+adlib27/interact.py
+adlib27.egg-info/PKG-INFO
+adlib27.egg-info/SOURCES.txt
+adlib27.egg-info/dependency_links.txt
+adlib27.egg-info/requires.txt
+adlib27.egg-info/top_level.txt
