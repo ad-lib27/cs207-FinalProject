@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="adlib27",
-    packages="["adlib27"]",
+    packages=["adlib27"],
     version="1.0.0",
     license="MIT",
     description="A library for automatic differentiation.",
