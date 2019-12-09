@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 class AutoDiff:
     """
@@ -18,7 +19,40 @@ class AutoDiff:
         else:
             self.der = der
 
-    #  Unary operations (negation)
+
+    # Comparison operations
+    def __eq__(self, other):
+        """
+        Overloading the equality operator
+        Parameters:
+            self (AutoDiff): The AutoDiff number itself
+            other (AutoDiff): The other AutoDiff number to compare
+        Returns:
+            bool: True if both AutoDiffs are equivalent, False otherwise
+        """
+        if isinstance(other, AutoDiff):
+            try:
+                assert self.val == pytest.approx(other.val)
+                for s, o in zip(self.der, other.der):
+                    assert s == pytest.approx(o)
+                return True
+            except AssertionError:
+                return False
+        return False
+
+
+    def __ne__(self, other):
+        """
+        Overloading the inequality operator
+        Parameters:
+            self (AutoDiff): The AutoDiff number itself
+            other (AutoDiff): The other AutoDiff number to compare
+        Returns:
+            bool: True if both AutoDiffs are different, False if they're equivalent
+        """
+        return not self.__eq__(other)
+
+    # Unary operations (negation)
 
     def __neg__(self):
         """
@@ -54,7 +88,7 @@ class AutoDiff:
         """
         return self
 
-    # Basic operations (+, -, *, /)
+    # Basic arithmetic operations (+, -, *, /)
 
     def __add__(self, other):
         """

@@ -20,6 +20,33 @@ def test_setters():
     for d in x.der:
         assert d == pytest.approx([0])
 
+# Testing the comparison operations
+
+def test_ne_const():
+    x = AD(val=[10])
+    y = 10
+    assert x != y
+
+def test_ne_different_AD():
+    x = AD(val=[10], index=0, magnitude=2)
+    y = AD(val=[20], index=1, magnitude=2)
+    assert x != y
+
+def test_eq_AD():
+    x1 = AD(val=[10])
+    x2 = AD(val=[10])
+    assert x1 == x2
+
+def test_ne_different_AD_many_val():
+    x = AD(val=[10, -1, 3.2, 4], index=0, magnitude=2)
+    y = AD(val=[-2, 0, 1, 100], index=1, magnitude=2)
+    assert x != y
+
+def test_eq_AD_many_val():
+    x1 = AD(val=[10, 1, 3, 4])
+    x2 = AD(val=[10, 1, 3, 4])
+    assert x1 == x2
+
 # Testing the Unary operations
 
 def test_neg():
