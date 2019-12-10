@@ -93,4 +93,4 @@ def test_conopt_no():
         assert contopt() == False
 
 def test_repropt():
-    assert repropt(optimize([0.0, 0.2, 0.4, 0.6, 0.8, 1.0], ['x'], '3*x'), [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], ['x'], '3*x') == "\nIn the domain 0.00000 to 1.00000, the extrema for 3*x represented as ['x'] are:\nThe local minimum is the endpoint located in the range ([0.0], [0.0]) valued in the range (0.0, 0.0)\nThe local maximum is the endpoint located in the range ([1.0], [1.0]) valued in the range (3.0, 3.0)"
+    assert repropt(optimize([0.0, 0.2, 0.4, 0.6, 0.8, 1.0], ['x'], '3*x'), [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], ['x'], '3*x') == "\nIn the domain 0.00000 to 1.00000, the extrema for 3*x represented as ['x'] are:\nThe local minimum is the endpoint located in the range ([0.0], [0.0]) valued near (0.0, 0.0)\nThe local maximum is the endpoint located in the range ([1.0], [1.0]) valued near (3.0, 3.0)"

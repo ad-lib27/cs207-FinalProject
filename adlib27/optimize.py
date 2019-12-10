@@ -80,8 +80,12 @@ def optimize(domain, variables, func):
             done = False
             #if there is critical point for the first variable, keep looking
             inflection = detect_critpoint(ad_func.der[0][i], ad_func.der[0][i + 1])
-            if inflection:
+            if inflection and len(variables) == 1:
+                pt = getpt(vals, k, i)
+                step = abs(domain[1]-domain[0])
+                critpoints += [{"variables": variables, "input range": (pt, getpt2(pt, step)), "value range": (ad_func.val[i], ad_func.val[i + 1]), "inflection type": inflection}]
                 #at the index where the critical point, make sure that all other variables have a critical point at this index
+            elif inflection and len(variables) != 1:
                 j = 1
                 while j < len(variables):
                     inflection = detect_critpoint(ad_func.der[j][i], ad_func.der[j][i + 1])
