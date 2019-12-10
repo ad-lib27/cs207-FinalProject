@@ -5,9 +5,9 @@ from adlib27.elem_function import exp, sin, cos, tan, arcsin, arccos, arctan, si
 
 
 # function to perform optimization
-#domain is a list of evenly spaced, sequential floats
-#variables are a list of strings
-#func is a python-formatted function as a string
+# domain is a list of evenly spaced, sequential floats
+# variables are a list of strings
+# func is a python-formatted function as a string
 def optimize(domain, variables, func):
 
     # helper function to determine whether an inflection point is a critical point
@@ -17,7 +17,7 @@ def optimize(domain, variables, func):
         if y1 < 0 and y2 >= 0:
             return "critical point"
         return None
-    
+
     #function to render AD objects for different trials of point values
     def get_result(values, variables, func):
         funcdict = {"exp": exp, "sin": sin, "cos": cos, "tan": tan, "arcsin": arcsin, "arccos": arccos, "arctan": arctan, "sinh": sinh, "cosh": cosh, "tanh": tanh, "logistic": logistic, "log": log, "log2": log2, "log10": log10, "logb": logb, "sqrt": sqrt}
@@ -29,7 +29,7 @@ def optimize(domain, variables, func):
             vardict[variables[i]] = ADlist[i]
             i += 1
         return eval(func,funcdict,vardict)
-    
+
     #function to get all trial values by rotating a list to get all permutations with replacement
     def vals_generator(domain, variables):
         def rotator(listed):
@@ -40,12 +40,12 @@ def optimize(domain, variables, func):
                 rotations.append(listed)
                 i += 1
             return rotations
-        
+
         combos = prod(rotator(domain), repeat = len(variables))
-        combolist = [list(ele) for ele in combos] 
-        
+        combolist = [list(ele) for ele in combos]
+
         return combolist
-                
+
 
 
     # create first AD object before looping
@@ -61,7 +61,7 @@ def optimize(domain, variables, func):
             pt.append(vals[ind][a][index])
             a += 1
         return pt
-    
+
     #helper function to find point following a point
     def getpt2(point, step):
         p2 = [x + step for x in point]
@@ -105,10 +105,10 @@ def optimize(domain, variables, func):
             if done == True:
                 break
             #continue if no critical point for variable
-            else: 
+            else:
                 i += 1
         k += 1
-    
+
     #check for duplicate critical points from search, delete if so
     def point_compare(points):
         lenp = len(points[0]["variables"])
@@ -137,4 +137,4 @@ def optimize(domain, variables, func):
     # return the global max and global min, as well as all the other critpoints, with metadata
     results = {"global maximum": {"input range": critpoints[values.index(max(values))]["input range"], "value range": max(values), "inflection type": critpoints[values.index(max(values))]["inflection type"]}, "global minimum": {"input range": critpoints[values.index(min(values))]["input range"], "value range": min(values), "inflection type": critpoints[values.index(min(values))]["inflection type"]}, "all critical points": critpoints}
 
-    return results 
+    return results
