@@ -56,7 +56,7 @@ def test_bad_optend():
 
 def test_good_optvals():
     with mock.patch('builtins.input', side_effect=['1', '0', '2']):
-        assert getoptvals(['a', 'b']) == [[0.0, 1.0, 2.0], [0.0, 1.0, 2.0]]
+        assert getoptvals(['a', 'b']) == [0.0, 1.0, 2.0]
 
 #tests for number of points for evaluation mode
 def test_bad_pointnumber():
