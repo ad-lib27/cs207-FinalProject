@@ -18,7 +18,7 @@
   - [interact](#interact)
   - [optimize](#optimize)
   - [External Dependencies](#dependencies)
-- [Additional Features](#future_features)
+- [Additional Features](#additional_features)
 
 
 ## Introduction <a name="introduction"></a>
@@ -40,16 +40,16 @@ One can see, then, that what the forward mode is doing is efficiently computing 
 
 For example, if we wanted to compute `f(pi/16)` for `f(x) = x - exp(-2sin(4*x)**2)`, we could use the forward mode to generate the following evaluation trace:
 
-trace | value | derivative
---- | --- | ---
-`x1` | `pi/16` | `pi/16`
-`x2` | `4*x1` | `pi/4`
-`x3` | `sin(x2)` | `sqrt(2)/2`
-`x4` | `x3 ** 2` | `1/2`
-`x5` | `-2x4` | `-1`
-`x6` | `exp(x5)` | `1/e`
-`x7` | `-x6` | `-1/e`
-`x8` | `x1 + x7` | `pi/16 - 1/e`
+trace | elem fun | elem func der | val | der
+--- | --- | --- | --- | ---
+`x1` | `pi/16` | `1` | `pi/16` | `1`
+`x2` | `4*x1` | `4*(x1’)` | `pi/4` | `4`
+`x3` | `sin(x2)` | `cos(x2)*x2’` | `sqrt(2)/2` | `2*sqrt(2)`
+`x4` | `x3 ** 2` | `2*x3*x3’` | `1/2` | `4`
+`x5` | `-2*x4` | `-2*x4’` | `-1` | `-8`
+`x6` | `exp(x5)` | `exp(x5)*x5’` | `1/e` | `-8/e`
+`x7` | `-x6` | `-x6’` | `-1/e` | `8/e`
+`x8` | `x1 + x7` | `x1’ + x7’` | `pi/16 - 1/e` | `1 + 8/e`
 
 And the corresponding evaluation graph would look like the below, where we indicate the input value as `x` and the output value as `f`:
 
@@ -139,7 +139,6 @@ z = x + y
 z.val → will produce the output: [8, -1, 4.2, 104]
 z.der → will produce the output: [[1, 1, 1, 1], [1, 1, 1, 1]]
 ```
-
 Multivariable case with multiple functions:
 
 ```
@@ -192,7 +191,7 @@ cs207-FinalProject/
     .travis.yml
     setup.py
     setup.cfg
-    requirements.txt  
+    requirements.txt    
 ```
 
 ### Included Modules <a name="modules"></a>
@@ -203,14 +202,16 @@ cs207-FinalProject/
 
   - `interact.py`
 
-    This module allows the user to interact with our automatic differentiation library via a command line interface. The user is prompted for a function f to evaluate, then for the value(s) at which to evaluate f. The module then either prints the final value and derivative of the given function at the given x-value, or performs optimization for f, depending on what the user wants.
+    This module allows the user to interact with our automatic differentiation library via a command line interface. The user is first prompted to input variables (which must be composed of letter characters) one by one, and for a function f(variables) to evaluate. Then, the user indicated whether they would like to evaluate at point values, or to optimize. 
+If they choose to evaluate, they are prompted to enter a number of points to evaluate at, and then to enter a value for each variable for each point. The module then prints the final value and derivative of the given function at each point value.
+If they choose to optimize, they are asked to enter a step size, and then a start point and stop point. All variables will be searched within this domain. The module prints the local maximum and minimum (including endpoints, if this is the case) in terms of the ranges they are located in and the ranges their values are in. The user is then asked if they would like to continue optimizing, in which case they can use a new step size, start point, and stop point to search further.
 
   - `elem_function.py`
 
     This module is used in conjunction with autodiff.py to support the elementary functions in the construction of more complex AutoDiff objects. Each of these elementary functions takes in an AutoDiff object as input and returns a new AutoDiff object with the appropriate value and derivative (by passing in the input’s value and derivative to the corresponding numpy function). If, instead of an AutoDiff object, a float value is passed in, the elementary function will simply pass in the float value to the corresponding numpy function and return that new value instead.
 
   - `optimize.py`
-    This module is used in conjunction with interact.py to support optimization of functions. It contains a single function to perform optimization, which expects an AutoDiff object (representing a function), a domain, and an index to indicate which partial derivative to analyze. It then outputs information about the extrema of the AutoDiff function relative to the given domain.
+    This module is used in conjunction with interact.py to support optimization of functions. It contains a single function to perform optimization, which expects a domain to search over (represented by a list of evenly spaced, sequential floats), a list of variables in the function to be optimized, and the function to be optimized (as a string). It then outputs information about the extrema of the AutoDiff function relative to the given domain.
 
 ### Tests <a name="tests"></a>
   - Tests are in the tests/ directory.
@@ -261,7 +262,7 @@ The idea is that the user (in their driver code), first instantiates an AutoDiff
 
 ### interact <a name="interact"></a>
 
-As described in the previous sections, the `interact` module is a command line interface for the user, which prompts the user to input a function (formatted as they would write it in Python), as well as a value at which to evaluate the function, and then either outputs the function’s value and derivative or provides optimization data, depending on the user’s preference.
+As described in the previous sections, the `interact` module is a command line interface for the user. Upon running the file, the user is first asked whether their function contains a variable. If it does, which prompts the user to input a function (formatted as they would write it in Python), as well as a value at which to evaluate the function, and then either outputs the function’s value and derivative or provides optimization data, depending on the user’s preference.
 
 This module uses an external library, `mock`, to execute the user’s string input as if it were code. This, of course, only works as long as the user formats their input string properly. Thus, the `main` function of this program will continue to prompt the user for input until they provide a properly-formatted function string.
 
@@ -275,7 +276,7 @@ The `numpy` library supports math operations and elementary functions.
 The `pytest` library supports coverage testing.
 The `mock` library supports mock-inputs to the keyboard for the user interface (interact.py).
 
-## Additional Features: Optimization and Interaction <a name="future_features"></a>
+## Additional Features: Optimization and Interaction <a name="additional_features"></a>
 
 The optimization problem boils down to looking for the largest value or the smallest value that a function can produce in a domain interval. In other words, it boils down to looking for local extrema and global extrema (relative to a domain interval). One way to approach optimization problems is by using derivatives. We can think of the value of the derivative as indicating the slope of the function. Thus, a transition of a derivative from a positive value to a negative value indicates the existence of a local maximum, while a transition of a derivative from a negative value to a positive value indicates the existence of a local minimum. This method of optimization also avoids recognizing points of inflection as extrema, since it only looks for where the derivative switches from a negative value to a positive value, or from a positive value to a negative value. 
 
@@ -310,7 +311,7 @@ From the previous example, we determined that global maximum falls in the interv
 ```
 vals = np.linspace(1.5612244897959184, 1.5714285714285714, 150)
 x = AD(val=vals)
-r = optimize(sin(x), vals)
+r = optimize(vals, [‘x’], ‘sin(x)’)
 print(r["global maximum"])
 ```
 
