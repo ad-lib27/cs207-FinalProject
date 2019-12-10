@@ -262,19 +262,32 @@ The idea is that the user (in their driver code), first instantiates an AutoDiff
 
 ### interact <a name="interact"></a>
 
-As described in the previous sections, the `interact` module is a command line interface for the user. Upon running the file, the user is first asked whether their function contains a variable. If it does, which prompts the user to input a function (formatted as they would write it in Python), as well as a value at which to evaluate the function, and then either outputs the function’s value and derivative or provides optimization data, depending on the user’s preference.
+As described in the previous sections, the `interact` module is a command line interface for the user. Upon running the file, the user is first asked whether their function contains a variable. If it does, they enter variables one at a time and are re-prompted until they state that they’re done entering variables. The variables can be named anything that is composed entirely of letters. Then, the user is prompted to input a function (formatted as they would write it in Python, using the library’s notation for elementary functions).Then, they have the option to use one of two modes: point evaluation or optimization.
 
-This module uses an external library, `mock`, to execute the user’s string input as if it were code. This, of course, only works as long as the user formats their input string properly. Thus, the `main` function of this program will continue to prompt the user for input until they provide a properly-formatted function string.
+If they choose to evaluate the function at given points, the user is prompted to choose how many points they would like to evaluate. Then, they are prompted, variable by variable, to input a python-formatted list of values for evaluation. For example, if the user wanted to evaluate at (x, y) points (0, 1) and (3,4), they would need to input `[0, 3]` when prompted for x and `[1, 4]` when prompted for y.  Then, interact.py prints the function value and the derivative with respect to each of the variables, for each of the points entered. At this time, the program is done.
+
+If they choose to optimize, the user is prompted for a step size. This will be the distance between values for each variable, and will be the same for all variables. Then, they are prompted for a start point to begin searching, and a stop point to end searching for critical points. Then, interact.py prints the local minimum and maximum for this function in this domain, in terms of a range where it exists (due to having a chosen step size) and a range of values. Then, the user is asked if they would like to continue optimizing. This gives them a chance to continue looking for critical points, where they are asked for a new step, start, and stop. Otherwise, the program is done.
+
+The test for this module uses an external library, `mock`, to execute the user’s string input as if it were code. Of course, any input only works as long as the user formats their input string properly. Thus, in the case of a failed entry, the `main` function of this program will continue to prompt the user for input until they provide a properly-formatted function string.
 
 ### optimize <a name="optimize"></a>
 
-As previously mentioned, the optimize module is used in conjunction with interact.py to support optimization of functions. It contains a single function to perform optimization, which expects an AutoDiff object (representing a function), a domain, and an index to indicate which partial derivative to analyze. It then outputs information about the extrema of the AutoDiff function relative to the given domain.
+As previously mentioned, the optimize module is used in conjunction with interact.py to support optimization of functions. It contains a single function to perform optimization, which expects a domain (of evenly-spaced, sequential variables to search over), a list of variables as a list of strings, and a function as a string. It then outputs information about the extrema of the AutoDiff function relative to the given domain.
+
+The domain is used to create a list of list of lists, where each entry is a different set of values to search for critical points in an AutoDiff instance. To search over the entirety of the given range, the domain must be rotated (i.e. [0, 1, 2], to [1, 2, 0], to [2, 0, 1]). Creating a set of all permutations of these rotations (with replacement), covers the entirety of the range, for each variable, for the given domain. The helper function vals_generator does this, and the output is a list of terms that may each be used to construct an AutoDiff instance as the “value” term.
+
+Then, the function loops over a set of ADs built by the vals_generator. For each AD, the function looks for a critical point by comparing derivative values (with respect to the first variable). If the sign of the derivative switches from negative to positive or vice versa, a critical point has been found, but just for that variable. If there is only one variable, this is a critical point and an entry is made into a list of critical variables, where each entry is a list with metadata. If there is more than one variable, the function confirms that this is a critical point by checking that for the value index where the critical point was found, each variable also has a critical point with respect to itself. If and only if this is the case, this is a critical point, and an entry is made. Information stored in these entries includes variables, the input range where the point was found, the value range for the point (because the domain is discrete, the answer is a range and not exact), and the type of critical point. Endpoints are also stored, since they will be the minima and maxima for non-oscillating functions. 
+
+Then, the function outputs a dictionary that includes all these critical points (some of which describe the same actual point on the function, because of how looping occurs), including a single minimum and single maximum. 
+
+Because this function does not have second-order derivative functionality, the minimum and maximum of the list of critical points are determined by comparison. Whether critical points besides these two are minima, maxima, or saddle points is unknown. 
 
 ### External Dependencies <a name="dependencies"></a>
 
 The `numpy` library supports math operations and elementary functions.
 The `pytest` library supports coverage testing.
 The `mock` library supports mock-inputs to the keyboard for the user interface (interact.py).
+The function `product` from the ‘`itertools` library supports value generation for optimize.py
 
 ## Additional Features: Optimization and Interaction <a name="additional_features"></a>
 
@@ -293,8 +306,7 @@ Looking underneath the hood at an example from a development perspective, the be
 
 ```
 vals = np.linspace(1.5, 2, 50)
-x = AD(val=vals)
-r = optimize(sin(x), vals)
+r = optimize(vals, [‘x’], ‘sin(x)’)
 print(r["global maximum"])
 ```
 
@@ -310,7 +322,6 @@ From the previous example, we determined that global maximum falls in the interv
 
 ```
 vals = np.linspace(1.5612244897959184, 1.5714285714285714, 150)
-x = AD(val=vals)
 r = optimize(vals, [‘x’], ‘sin(x)’)
 print(r["global maximum"])
 ```
@@ -324,4 +335,4 @@ Below is the output to the above code:
 We can see that this time the output is much more precise and very close to what is obtained by `math.pi/2`, which is 1.5707963267948966. By continuing to run the program in this way, the user can attain whichever level of precision they desire.
 
 
-The interact.py interface also supports an additional functionality, where users will again be prompted to input a function containing variables, as well as the value(s) at which to evaluate it. It then returns the corresponding function values and the partial derivative for each variable, evaluated at the specified values.
+The interact.py interface also supports an additional functionality, where users are able to input a function and then decide to either to evaluate at points or to optimize. If they evaluate, they receive a value, as well as derivatives with respect to all variables, for each of the points they enter. If they optimize, they search, using a step size, over a domain they provide. They receive the location and value (as ranges, due to the discrete nature of the searching) for the local minimum and local maximum, as well as whether these are critical points or endpoints to the function. 
