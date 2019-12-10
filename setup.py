@@ -3,13 +3,13 @@ import setuptools
 setuptools.setup(
     name="adlib27",
     packages=["adlib27"],
-    version="1.0.1",
+    version="1.0.2",
     license="MIT",
     description="A library for automatic differentiation.",
     author="Camille Bean, Jerri Zhang, Mark Gakman, Rodrigo Daboin Sanchez",
     author_email="ideal1031@gmail.com",
     url="https://github.com/ad-lib27/cs207-FinalProject",
-    download_url="https://github.com/ad-lib27/cs207-FinalProject/archive/1.0.1.tar.gz",
+    download_url="https://github.com/ad-lib27/cs207-FinalProject/archive/1.0.2.tar.gz",
     keywords=["automatic differentiation", "derivative", "forward mode"],
     install_requires=["numpy", "pytest", "mock"],
     classifiers=[
