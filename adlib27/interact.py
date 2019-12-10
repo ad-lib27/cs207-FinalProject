@@ -121,7 +121,7 @@ def getvalues(variables, pointnum):
     return values
 
 #use ADlist to evaluate value and derivative for a function 
-def get_result(values,variables,func):
+def getresult(values,variables,func):
     funcdict = {"exp": exp, "sin": sin, "cos": cos, "tan": tan, "arcsin": arcsin, "arccos": arccos, "arctan": arctan, "sinh": sinh, "cosh": cosh, "tanh": tanh, "logistic": logistic, "log": log, "log2": log2, "log10": log10, "logb": logb, "sqrt": sqrt}
     i = 0
     ADlist = []
@@ -240,7 +240,7 @@ def main():
         while gp == False: gp = getpointnum()
         gx = getvalues(gv, gp)
         while gx == False: gx = getvalues(gv, gp)
-        print(reprresult(gx,gv,get_result(gx,gv,gf),gp,gf))
+        print(reprresult(gx,gv,getresult(gx,gv,gf),gp,gf))
     else:
         searching = True
         while searching == True: 
