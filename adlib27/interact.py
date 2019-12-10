@@ -1,6 +1,7 @@
 from adlib27.optimize import optimize
 from adlib27.elem_function import exp, sin, cos, tan, arcsin, arccos, arctan, sinh, cosh, tanh, logistic, log, log2, log10, logb, sqrt
 from adlib27.autodiff import AutoDiff as AD
+import numpy as np
 
 #initialize the program and ask for variables
 def getvars():
